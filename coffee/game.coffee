@@ -4,6 +4,7 @@ class GameController
 			coords =
 				x: arguments[0].coords.longitude + (Math.random() * 10) / 2000
 				y: arguments[0].coords.latitude + (Math.random() * 10) / 2000
+			document.getElementById("header").innerHTML = "Got starting location : (#{coords.x}:#{coords.y})"
 			dots.push coords
 	@verify = (newCoords) ->
 		return if index is dots.length

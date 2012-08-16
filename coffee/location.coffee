@@ -1,4 +1,4 @@
-engine = 'gps'document.getElementById("footerinfo").innerHTML = "Got the initial Position"
+engine = 'gps'
 peak = 
 	x: 0
 	y: 0
@@ -9,18 +9,18 @@ class LocationController
 	@getLocation: (args) ->
 		document.getElementsByTagName("footer")[0]?.innerHTML = "Connecting to get location."
 		if engine is "gps" 
-			document.removeEventListener "devicemotion", @deviceMotion
-			watch
-			watch = navigator.geolocation.getCurrentPosition @deviceLocation
+			document.removeEventListener "devicemotion", LocationController.deviceMotion
+			watch = null
+			watch = navigator.geolocation.getCurrentPosition LocationController.deviceLocation
 		else
 			document.getElementById("footerinfo")?.innerHTML = "Going with metering"
 			watch = null 
-			window.addEventListener "devicemotion", @deviceMotion
+			window.addEventListener "devicemotion", LocationController.deviceMotion
 
-	@deviceLocation: () ->
+	@deviceLocation: (ev) ->
 		coords =
-			x: arguments[0].coords.longitude / 5000
-			y: arguments[0].coords.latitude / 5000
+			x: ev.coords.longitude
+			y: ev.coords.latitude
 		document.getElementsByTagName("footer")[0]?.innerHTML = """
 			Location Debugging --------------------------------- <br>
 			Latitude : #{coords.y} <br>
@@ -28,10 +28,6 @@ class LocationController
 		"""
 		newTick coords
 		lastPos = coords
-	, ->
-		document.getElementsByTagName("footer")[0].innerHTML = """
-			Error in getting location
-		"""
 
 	@deviceMotion: (event) ->
 		if event.accelerationIncludingGravity.x > peak.x then peak.x = event.accelerationIncludingGravity.x
@@ -43,15 +39,17 @@ class LocationController
 			Y : #{event.accelerationIncludingGravity.y} <br>
 			Z : #{event.accelerationIncludingGravity.z} <br>
 			<br><br>
-			X Peak : #{peak.x}
-			Y Peak : #{peak.y}
-			Z Peak : #{peak.z}
+			X Peak : #{peak.x} <br>
+			Y Peak : #{peak.y} <br>
+			Z Peak : #{peak.z} <br>
+			<br><br>
+			Current X : #{lastPos.x} <br>
+			Current Y : #{lastPos.y} <br>
 		"""
 		lastPos = 
-			x: lastPos.x + event.accelerationIncludingGravity.x / 10
-			y: lastPos.y + event.accelerationIncludingGravity.y / 10
-		newTick coords
-
+			x: lastPos.x + event.accelerationIncludingGravity.x / 200000
+			y: lastPos.y + event.accelerationIncludingGravity.y / 200000
+		newTick lastPos
 
 
 
@@ -67,8 +65,9 @@ document.onkeydown = (e) ->
 		when 39 then offsets.x++
 window.newTick = (args) ->	
 	console.log "Tick"
-	args.x += offsets.x / 10
-	args.y += offsets.y / 10
+	console.log offsets
+	args.x += offsets.x / 10000
+	args.y += offsets.y / 10000
 	action args for action in actions
 window.addAction = (action) -> actions.push action
 window.switchEngine = () -> if engine is "gps" then engine = "meter" else engine = "gps" ; document.getElementById("engine").innerHTML = engine; do LocationController.getLocation

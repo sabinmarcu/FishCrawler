@@ -1,0 +1,15 @@
+!_TAG_FILE_FORMAT	2	/extended format/
+!_TAG_FILE_SORTED	0	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Łukasz Korecki /lukasz@coffeesounds.com/
+!_TAG_PROGRAM_NAME	CoffeeTags	//
+!_TAG_PROGRAM_URL	https://github.com/lukaszkorecki/CoffeeTags	/GitHub repository/
+!_TAG_PROGRAM_VERSION	0.0.2.6	//
+@addDot	./coffee/game.coffee	/@addDot/;"	f	lineno:2	object:GameController	type:function
+@verify	./coffee/game.coffee	/@verify/;"	f	lineno:8	object:GameController	type:function
+@getLocation	./coffee/location.coffee	/@getLocation/;"	f	lineno:9	object:LocationController	type:function
+@deviceLocation	./coffee/location.coffee	/@deviceLocation/;"	f	lineno:20	object:LocationController	type:function
+@deviceMotion	./coffee/location.coffee	/@deviceMotion/;"	f	lineno:35	object:LocationController	type:function
+onkeydown	./coffee/location.coffee	/onkeydown/;"	f	lineno:61	object:window	type:function
+newTick	./coffee/location.coffee	/newTick/;"	f	lineno:67	object:window	type:function
+addAction	./coffee/location.coffee	/addAction/;"	f	lineno:72	object:window	type:function
+switchEngine	./coffee/location.coffee	/switchEngine/;"	f	lineno:73	object:window	type:function
